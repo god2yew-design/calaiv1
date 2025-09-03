@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.calaiv1.ui.theme.AccentOrange
 import kotlinx.coroutines.delay
+import android.util.Log
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -35,68 +36,64 @@ fun SplashScreen(navController: NavController) {
         label = "alpha"
     )
 
-    LaunchedEffect(key1 = true) {
+    // Debug: Navigate immediately to test if navigation works
+    LaunchedEffect(Unit) {
+        Log.d("SplashScreen", "SplashScreen launched")
         startAnimation = true
-        delay(3000L) // Increased to 3 seconds for visibility
-        // Navigate directly to onboarding
-        navController.navigate("onboarding") {
-            popUpTo("splash") { inclusive = true }
+        Log.d("SplashScreen", "Animation started")
+    }
+
+    // Try using a simple state-based navigation
+    var shouldNavigate by remember { mutableStateOf(false) }
+
+    // Trigger navigation after a short delay
+    LaunchedEffect(Unit) {
+        delay(2000L) // 2 seconds
+        Log.d("SplashScreen", "Setting shouldNavigate to true")
+        shouldNavigate = true
+    }
+
+    // Handle navigation when state changes
+    LaunchedEffect(shouldNavigate) {
+        if (shouldNavigate) {
+            Log.d("SplashScreen", "Navigation triggered by state change")
+            try {
+                navController.navigate("main") {
+                    popUpTo("splash") { inclusive = true }
+                }
+                Log.d("SplashScreen", "Navigation to main successful")
+            } catch (e: Exception) {
+                Log.e("SplashScreen", "Navigation failed", e)
+            }
         }
     }
     
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // App Logo
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .scale(scale)
-                    .clip(CircleShape)
-                    .background(AccentOrange),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "CA",
-                    color = Color.White,
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold
-                )
+        // Simple text for debugging
+        Text("Splash Screen Debug", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("Animation started: $startAnimation", fontSize = 16.sp)
+        Text("Should navigate: $shouldNavigate", fontSize = 16.sp)
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // Manual navigation button for testing
+        Button(onClick = {
+            Log.d("SplashScreen", "Manual navigation button clicked")
+            try {
+                navController.navigate("main") {
+                    popUpTo("splash") { inclusive = true }
+                }
+                Log.d("SplashScreen", "Manual navigation successful")
+            } catch (e: Exception) {
+                Log.e("SplashScreen", "Manual navigation failed", e)
             }
-            
-            Spacer(modifier = Modifier.height(24.dp))
-            
-            // App Name
-            Text(
-                text = "CalAI",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = alpha)
-            )
-            
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            // Tagline
-            Text(
-                text = "Your AI-Powered Nutrition Companion",
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f * alpha)
-            )
-            
-            Spacer(modifier = Modifier.height(48.dp))
-            
-            // Loading Indicator
-            CircularProgressIndicator(
-                color = AccentOrange,
-                modifier = Modifier.size(32.dp)
-            )
+        }) {
+            Text("Navigate to Main (Manual Test)")
         }
     }
 }
