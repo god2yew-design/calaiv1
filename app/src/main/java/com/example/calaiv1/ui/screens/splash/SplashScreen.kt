@@ -1,128 +1,51 @@
 package com.example.calaiv1.ui.screens.splash
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.calaiv1.ui.theme.AccentOrange
-import kotlinx.coroutines.delay
-import android.os.Handler
-import android.os.Looper
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    var startAnimation by remember { mutableStateOf(false) }
-
-    val scale by animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0.3f,
-        animationSpec = tween(durationMillis = 1000),
-        label = "scale"
-    )
-
-    val alpha by animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(durationMillis = 1000),
-        label = "alpha"
-    )
-
-    // Start animation and navigate after delay
-    LaunchedEffect(Unit) {
-        startAnimation = true
-        delay(2500L) // 2.5 seconds total (1s animation + 1.5s wait)
-        navController.navigate("test")
-    }
-
-    // Alternative approach using Handler (fallback if LaunchedEffect doesn't work)
-    DisposableEffect(Unit) {
-        startAnimation = true
-        val handler = Handler(Looper.getMainLooper())
-        val runnable = Runnable {
-            navController.navigate("test")
-        }
-        handler.postDelayed(runnable, 3000L) // Slightly longer delay
-
-        onDispose {
-            handler.removeCallbacks(runnable)
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // App Logo
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .scale(scale)
-                    .clip(CircleShape)
-                    .background(AccentOrange),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "CA",
-                    color = Color.White,
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        Text(
+            text = "🚀 CalAI App",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold
+        )
 
-            Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // App Name
-            Text(
-                text = "CalAI",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = alpha)
-            )
+        Text(
+            text = "Welcome to your AI Nutrition Companion!",
+            fontSize = 18.sp
+        )
 
-            Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-            // Tagline
-            Text(
-                text = "Your AI-Powered Nutrition Companion",
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f * alpha)
-            )
+        Button(onClick = { navController.navigate("main") }) {
+            Text("Enter App")
+        }
 
-                        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Loading Indicator
-            CircularProgressIndicator(
-                color = AccentOrange,
-                modifier = Modifier.size(32.dp)
-            )
+        Button(onClick = { navController.navigate("onboarding") }) {
+            Text("Setup Profile")
+        }
 
-            Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Manual navigation button for testing
-            Button(
-                onClick = {
-                    navController.navigate("test")
-                },
-                modifier = Modifier.fillMaxWidth(0.6f)
-            ) {
-                Text("Skip to Test (Debug)")
-            }
+        Button(onClick = { navController.navigate("test") }) {
+            Text("Test Navigation")
         }
     }
 }
