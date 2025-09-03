@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">CalAI</string>
+    <string name="app_description">Your AI-Powered Nutrition Companion</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_meals">Meals</string>
+    <string name="nav_camera">Scan</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_profile">Profile</string>
+    
+    <!-- Onboarding -->
+    <string name="onboarding_title">Complete Your Profile</string>
+    <string name="onboarding_welcome">Let\'s personalize your experience</string>
+    <string name="onboarding_basic_info">Basic Information</string>
+    <string name="onboarding_goals">Your Goals</string>
+    <string name="onboarding_diet_preferences">Diet Preferences</string>
+    <string name="onboarding_activity_level">Activity Level</string>
+    <string name="onboarding_units">Units</string>
+    
+    <!-- Common -->
+    <string name="complete">Complete</string>
+    <string name="skip">Skip</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    
+    <!-- Premium -->
+    <string name="premium">Premium</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="try_premium">Try Premium</string>
+    
+    <!-- Features -->
+    <string name="ai_meal_planner">AI Meal Planner</string>
+    <string name="ai_food_recognition">AI Food Recognition</string>
+    <string name="barcode_scanner">Barcode Scanner</string>
+    <string name="receipt_scanner">Receipt Scanner</string>
+</resources>
