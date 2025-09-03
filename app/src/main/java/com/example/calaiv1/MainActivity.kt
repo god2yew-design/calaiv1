@@ -35,30 +35,45 @@ fun SimpleAppScreen() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "🎉 CalAI App Loaded Successfully!",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
+            text = "🚀 CALAI APP WORKING!",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = androidx.compose.ui.graphics.Color(0xFF4CAF50)
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = "Splash screen completely removed!",
+            fontSize = 18.sp,
+            color = androidx.compose.ui.graphics.Color(0xFF2196F3)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "The app is working! Navigation system bypassed.",
-            fontSize = 16.sp
+            text = "App is now functional without splash screen",
+            fontSize = 14.sp
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
-        Button(onClick = { /* TODO: Add navigation later */ }) {
-            Text("Ready to build features!")
+        Button(
+            onClick = { /* Navigation will be added later */ },
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = androidx.compose.ui.graphics.Color(0xFF4CAF50)
+            )
+        ) {
+            Text("🎯 Ready to Build Features!", color = androidx.compose.ui.graphics.Color.White)
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "✅ App is functional",
-            fontSize = 14.sp,
-            color = androidx.compose.ui.graphics.Color.Green
+            text = "✅ SUCCESS: No more splash screen!",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = androidx.compose.ui.graphics.Color(0xFF4CAF50)
         )
     }
 }
