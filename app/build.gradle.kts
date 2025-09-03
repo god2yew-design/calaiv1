@@ -19,15 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -44,6 +36,35 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    // Fix 16KB page size alignment for Android 15+ compatibility
+    buildTypes {
+        debug {
+            packaging {
+                dex {
+                    useLegacyPackaging = true
+                }
+                jniLibs {
+                    useLegacyPackaging = true
+                }
+            }
+        }
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            packaging {
+                dex {
+                    useLegacyPackaging = true
+                }
+                jniLibs {
+                    useLegacyPackaging = true
+                }
+            }
         }
     }
 }
