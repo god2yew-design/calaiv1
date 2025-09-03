@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.calaiv1.ui.theme.AccentOrange
 import kotlinx.coroutines.delay
@@ -31,29 +32,32 @@ fun SplashScreen(
         animationSpec = tween(durationMillis = 1000),
         label = "scale"
     )
-    
+
     val alpha by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(durationMillis = 1000),
         label = "alpha"
     )
-    
+
+    val shouldNavigateToOnboarding by viewModel.shouldNavigateToOnboarding.collectAsStateWithLifecycle()
+    val shouldNavigateToMain by viewModel.shouldNavigateToMain.collectAsStateWithLifecycle()
+
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(2000L)
         viewModel.checkOnboardingStatus()
     }
-    
-    LaunchedEffect(viewModel.shouldNavigateToOnboarding) {
-        if (viewModel.shouldNavigateToOnboarding.value) {
+
+    LaunchedEffect(shouldNavigateToOnboarding) {
+        if (shouldNavigateToOnboarding) {
             navController.navigate("onboarding") {
                 popUpTo("splash") { inclusive = true }
             }
         }
     }
-    
-    LaunchedEffect(viewModel.shouldNavigateToMain) {
-        if (viewModel.shouldNavigateToMain.value) {
+
+    LaunchedEffect(shouldNavigateToMain) {
+        if (shouldNavigateToMain) {
             navController.navigate("main") {
                 popUpTo("splash") { inclusive = true }
             }
