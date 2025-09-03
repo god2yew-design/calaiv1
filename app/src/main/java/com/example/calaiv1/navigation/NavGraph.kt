@@ -16,7 +16,7 @@ import com.example.calaiv1.ui.screens.main.MainScreen
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String = Screen.Splash.route
+    startDestination: String = Screen.Main.route // Temporarily start with MainScreen
 ) {
     NavHost(
         navController = navController,
