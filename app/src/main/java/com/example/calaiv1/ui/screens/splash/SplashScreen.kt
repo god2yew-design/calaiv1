@@ -15,16 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.calaiv1.ui.theme.AccentOrange
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(
-    navController: NavController,
-    viewModel: SplashViewModel = hiltViewModel()
-) {
+fun SplashScreen(navController: NavController) {
     var startAnimation by remember { mutableStateOf(false) }
 
     val scale by animateFloatAsState(
@@ -39,24 +35,13 @@ fun SplashScreen(
         label = "alpha"
     )
 
-        // Set up navigation callbacks
-    LaunchedEffect(Unit) {
-        viewModel.onNavigateToOnboarding = {
-            navController.navigate("onboarding") {
-                popUpTo("splash") { inclusive = true }
-            }
-        }
-        viewModel.onNavigateToMain = {
-            navController.navigate("main") {
-                popUpTo("splash") { inclusive = true }
-            }
-        }
-    }
-
     LaunchedEffect(key1 = true) {
         startAnimation = true
-        delay(2000L)
-        viewModel.checkOnboardingStatus()
+        delay(3000L) // Increased to 3 seconds for visibility
+        // Navigate directly to onboarding
+        navController.navigate("onboarding") {
+            popUpTo("splash") { inclusive = true }
+        }
     }
     
     Box(
