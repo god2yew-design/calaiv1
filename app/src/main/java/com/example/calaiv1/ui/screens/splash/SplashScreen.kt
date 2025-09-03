@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.calaiv1.ui.theme.AccentOrange
 import kotlinx.coroutines.delay
+import android.os.Handler
+import android.os.Looper
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -39,8 +41,20 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         startAnimation = true
         delay(2500L) // 2.5 seconds total (1s animation + 1.5s wait)
-        navController.navigate("onboarding") {
-            popUpTo("splash") { inclusive = true }
+        navController.navigate("test")
+    }
+
+    // Alternative approach using Handler (fallback if LaunchedEffect doesn't work)
+    DisposableEffect(Unit) {
+        startAnimation = true
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = Runnable {
+            navController.navigate("test")
+        }
+        handler.postDelayed(runnable, 3000L) // Slightly longer delay
+
+        onDispose {
+            handler.removeCallbacks(runnable)
         }
     }
 
@@ -90,13 +104,25 @@ fun SplashScreen(navController: NavController) {
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f * alpha)
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+                        Spacer(modifier = Modifier.height(48.dp))
 
             // Loading Indicator
             CircularProgressIndicator(
                 color = AccentOrange,
                 modifier = Modifier.size(32.dp)
             )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Manual navigation button for testing
+            Button(
+                onClick = {
+                    navController.navigate("test")
+                },
+                modifier = Modifier.fillMaxWidth(0.6f)
+            ) {
+                Text("Skip to Test (Debug)")
+            }
         }
     }
 }
